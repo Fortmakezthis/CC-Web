@@ -33,8 +33,8 @@ function web.GET(path, ID)
     end
 end
 
-function web.POST(path, data, ID)
-    rednet.send(ID, {path = path, data = data}, "POST")
+function web.POST(path, body, ID)
+    rednet.send(ID, {path = path, body = body}, "POST")
     local _, response = rednet.receive("RESPONSE", 5)
     if response == nil then
         return nil
@@ -72,7 +72,7 @@ function web.getRequests()
             rednet.send(id, false, "RESPONSE")
             return
         else
-            file.write(message.data)
+            file.write(message.body)
             rednet.send(id, true, "RESPONSE")
             file.close()
         end
