@@ -56,7 +56,7 @@ end
 function web.getRequests()
     local id, message, request = rednet.receive()
     if request == "PING" then
-        web.PING(id)
+        rednet.send(id, "PONG", "PING")
     elseif request == "GET" then
         local file = fs.open(message, "r")
         if file == nil then
