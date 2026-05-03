@@ -19,7 +19,7 @@ else
     print("No modem found!")
 end
 
-local web = require("webUtils")
+local web = require("/webUtils")
 
 print("Only authorized servers will be listed, if you want to add a server, contact Tozik LLC. to add it to the list!")
 print("Site list:")
@@ -36,24 +36,23 @@ while true do
     print("Enter server url (Domain).(TLD) example: obama.tz")
     web.currentUrl = read():lower()
     web.currentId = web.getId(web.currentUrl)
-    print(web.currentId)
     if web.currentId == nil then
         print("Not a valid server!")
     else
-        print("Requesting client...")
-        local client = web.GET("/client.lua")
-        if client == nil then
+        print("Requesting index...")
+        local index = web.GET("/index.lua", web.currentId)
+        if index == nil then
             print("Server timed out!")
-        elseif client == false then
+        elseif index == false then
             print("File not found on server!")
         else
             print("Loading...")
-            clientFile = fs.open("web/client.lua", "w")
-            clientFile.write(client)
-            clientFile.close()
+            indexFile = fs.open("web/index.lua", "w")
+            indexFile.write(index)
+            indexFile.close()
             term.clear()
             term.setCursorPos(1, 1)
-            shell.run("web/client.lua")
+            shell.run("web/index.lua")
         end
     end
 end
