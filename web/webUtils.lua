@@ -12,6 +12,8 @@ else
     web.sites = sites
 end
 
+function web.splitUrl(url) return string.match(url, "([^/]+)/(.*)")
+
 function web.getID(siteUrl)
     for i, site in ipairs(web.sites) do
         if site["url"] == siteUrl then
