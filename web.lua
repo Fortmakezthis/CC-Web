@@ -40,19 +40,7 @@ while true do
         print("Not a valid server!")
     else
         print("Requesting index...")
-        local index = web.GET("/server/index.lua", web.currentId)
-        if index == nil then
-            print("Server timed out!")
-        elseif index == false then
-            print("File not found on server!")
-        else
-            print("Loading...")
-            indexFile = fs.open("/web/webCache/index.lua", "w")
-            indexFile.write(index)
-            indexFile.close()
-            term.clear()
-            term.setCursorPos(1, 1)
-            shell.run("web/index.lua")
-        end
+        web.getPage("/server/index.lua", web.currentId)
+        shell.run("/web/webCache/" .. web.currentId .. "/server/index.lua")
     end
 end
