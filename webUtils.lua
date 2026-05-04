@@ -79,4 +79,10 @@ function web.getRequests()
     end
 end
 
+function web.writeFile(path, content)
+    local file = fs.open(path, "w")
+    file.write(content)
+    file.close()
+end
+
 return web
