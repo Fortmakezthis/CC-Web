@@ -18,8 +18,9 @@ wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/serv
 # How to set up DNS server
 Try to guess. Honestly. Yep, you guessed it. Either download the files manually, or download and run this:
 ```lua
-wget
+wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/dnsInstaller.lua /dnsInstaller.lua
 ```
+You *do* need to add sites to /dns/sites.json. Remember, only add sites that *you trust,* especially if you're on a server with other programmers.
 
 # How to use webUtils.lua
 At the top of every script, write:
