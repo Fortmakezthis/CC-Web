@@ -89,6 +89,7 @@ function web.getPage(path, ID)
     local cacheFile = "/web/webCache/" .. ID .. "/" .. path
     if fs.exists(cacheFile) then
         return true
+    end
     rednet.send(ID, path, "GET")
     local _, response = rednet.receive("RESPONSE", 5)
     if response == nil then
