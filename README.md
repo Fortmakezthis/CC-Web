@@ -5,14 +5,21 @@ This is a repository to store files for my Web project for CC: Tweaked, a progra
 There are two ways to install web and webUtils. The first is downloading wubDater.lua from here, dragging it onto a computer in Minecraft, and running it.
 The second is running:
 ```lua
-wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/wubDater.lua
+wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/wubDater.lua /wubDater.lua
 ```
 To download the installer (And updater), then running it.
 
 # How to install server
 Same as first. Either download the files manually, or download and run this:
 ```lua
-wget 
+wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/serverInstaller.lua /serverInstaller.lua
+```
+
+# How to set up DNS server
+Try to guess. Honestly. Yep, you guessed it. Either download the files manually, or download and run this:
+```lua
+wget
+```
 
 # How to use webUtils.lua
 At the top of every script, write:
