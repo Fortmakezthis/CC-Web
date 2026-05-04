@@ -7,7 +7,7 @@ if fs.exists("/web/basalt.lua") == false then
     print("Basalt is not installed!!!\nDo you wish to install from the internet? Y/N")
     if string.lower(read()) == "y" then
         print("Downloading...")
-        shell.run("wget run https://raw.githubusercontent.com/Pyroxenium/Basalt2/main/install.lua -r /web/basalt.lua")
+        shell.run("wget run https://raw.githubusercontent.com/Pyroxenium/Basalt2/main/install.lua /web/basalt.lua")
     else
         print("Proceeding, some servers may not work without basalt!")
     end
