@@ -117,7 +117,7 @@ function web.getPage(path)
     if ID == nil then
         return nil
     end
-    local response = web.GET(filePath)
+    local response = web.GET(path)
     if response == nil then
         return nil
     elseif response == false then
