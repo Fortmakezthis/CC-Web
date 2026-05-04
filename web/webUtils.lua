@@ -103,10 +103,6 @@ function web.getPage(path)
     if ID == nil then
         return nil
     end
-    local cacheFile = "/web/webCache/" .. ID .. "/" .. filePath
-    if fs.exists(cacheFile) then
-        return true
-    end
     local response = web.GET(path)
     if response == nil then
         return nil
