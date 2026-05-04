@@ -7,7 +7,7 @@ local web = require("/web/webUtils")
 
 web.writeFile("/startup.lua", [[
 print("Starting server...")
-shell.run("/web/server.lua")
+shell.run("/server/server.lua")
 ]])
 
 print("Server installed! Please restart the computer to start the server.")
