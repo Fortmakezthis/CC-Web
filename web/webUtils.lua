@@ -1,6 +1,7 @@
 local web = {}
 web.currentUrl = nil
-web.currentId = nil
+web.currentDomain = nil
+web.currentID = nil
 web.dnsId = 2
 web.sites = {}
 
@@ -14,6 +15,7 @@ end
 
 function web.splitUrl(url)
     local domain, path = string.match(url, "([^/]+)/(.*)")
+    if path == nil then domain = url end
     return {
         domain = domain,
         path = path
@@ -64,26 +66,26 @@ function web.PING(ID)
 end
 
 function web.getRequests()
-    local id, message, request = rednet.receive()
+    local ID, message, request = rednet.receive()
     if request == "PING" then
-        rednet.send(id, "PONG", "PING")
+        rednet.send(ID, "PONG", "PING")
     elseif request == "GET" then
         local file = fs.open(message, "r")
         if file == nil then
-            rednet.send(id, false, "RESPONSE")
+            rednet.send(ID, false, "RESPONSE")
             return
         end
         local content = file.readAll()
-        rednet.send(id, content, "RESPONSE")
+        rednet.send(ID, content, "RESPONSE")
         file.close()
     elseif request == "POST" then
         local file = fs.open(message.path, "w")
         if file == nil then
-            rednet.send(id, false, "RESPONSE")
+            rednet.send(ID, false, "RESPONSE")
             return
         else
             file.write(message.body)
-            rednet.send(id, true, "RESPONSE")
+            rednet.send(ID, true, "RESPONSE")
             file.close()
         end
     end
@@ -95,19 +97,25 @@ function web.writeFile(path, content)
     file.close()
 end
 
-function web.getPage(path, ID)
-    local cacheFile = "/web/webCache/" .. ID .. "/" .. path
+function web.getPage(path)
+    local host, filePath = string.match(path, "([^/]+)/(.*)")
+    local ID = web.getID(host)
+    if ID == nil then
+        return nil
+    end
+    local cacheFile = "/web/webCache/" .. ID .. "/" .. filePath
     if fs.exists(cacheFile) then
         return true
     end
-    local response = web.GET(path, ID)
+    local response = web.GET(path)
     if response == nil then
         return nil
     elseif response == false then
         return false
     else
-        web.writeFile("/web/webCache/" .. ID .. "/" .. path, response)
+        web.writeFile("/web/webCache/" .. ID .. "/" .. filePath, response)
         return true
     end
 end
+
 return web
