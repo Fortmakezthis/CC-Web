@@ -35,7 +35,7 @@ end
 
 function web.POST(path, body, ID)
     rednet.send(ID, {path = path, body = body}, "POST")
-    local _, response = rednet.receive("RESPONSE", 5)
+    local _, response = rednet.receive("RESPONSE", 0.1)
     if response == nil then
         return nil
     else
@@ -45,7 +45,7 @@ end
 
 function web.PING(ID)
     rednet.send(ID, "PING", "PING")
-    local _, response = rednet.receive("PING", 5)
+    local _, response = rednet.receive("PING", 0.1)
     if response == "PONG" then
         return true
     else
@@ -85,4 +85,15 @@ function web.writeFile(path, content)
     file.close()
 end
 
+function web.getPage(path, ID)
+    rednet.send(ID, path, "GET")
+    local _, response = rednet.receive("RESPONSE", 5)
+    if response == nil then
+        return nil
+    elseif response == false then
+        return false
+    else
+        web.writeFile("/web/webCache/" .. ID .. "/" .. path, response)
+    end
+end
 return web
