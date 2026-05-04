@@ -1,9 +1,10 @@
 local webUtilsNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/webUtils.lua").readAll()
-local webNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-web/refs/heads/main/web.lua").readAll()
+local webNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/web.lua").readAll()
 local webUtils = fs.open("/web/webUtils.lua", "r")
 local web = fs.open("/web.lua", "r")
+local webUtilsContent, webContent
 if webUtils then
-    local webUtilsContent = webUtils.readAll()
+    webUtilsContent = webUtils.readAll()
     webUtils.close()
 else
     print("WebUtils not found, creating new one...")
@@ -11,7 +12,7 @@ else
     webUtils.write(webUtilsNEW)
 end
 if web then
-    local webContent = web.readAll()
+    webContent = web.readAll()
     web.close()
 else
     print("Web not found, creating new one...")
@@ -20,7 +21,7 @@ else
     web.close()
 end
 
-if webNew == webContent then
+if webNEW == webContent then
     print("Web is up to date!")
 else
     print("Web is not up to date!")
@@ -29,7 +30,7 @@ else
     file.close()
 end
 
-if webUtilsNew == webUtilsContent then
+if webUtilsNEW == webUtilsContent then
     print("WebUtils is up to date!")
 else
     print("WebUtils is not up to date!")
