@@ -1,6 +1,7 @@
 [
   {
-    "url": "test",
-    "id": 3
+    "_comment": "remember to change all this, or else...",
+    "url": "example.tld",
+    "id": 0
   }
 ]
