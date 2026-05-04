@@ -19,8 +19,7 @@ else
     print("No modem found!")
 end
 
-shell.run("/wubDater.lua")
-
+shell.run("wubDate.lua")
 local web = require("/web/webUtils")
 
 print("Only authorized servers will be listed, if you want to add a server, contact Tozik LLC. to add it to the list!")
@@ -37,12 +36,16 @@ end
 while true do
     print("Enter server url (Domain).(TLD) example: obama.tz")
     web.currentUrl = read():lower()
-    web.currentId = web.getID(web.currentUrl)
-    if web.currentId == nil then
+    if web.splitUrl(web.currentUrl).path == nil then
+        web.currentUrl = web.currentUrl .. "/" .. "index.lua"
+    end
+    web.currentDomain = web.splitUrl(web.currentUrl).domain
+    web.currentID = web.getID(web.currentDomain)
+    if web.currentID == nil then
         print("Not a valid server!")
     else
         print("Requesting index...")
-        web.getPage("/server/index.lua", web.currentId)
-        shell.run("/web/webCache/" .. web.currentId .. "/server/index.lua")
+        web.getPage(web.currentUrl)
+        shell.run("/web/webCache/" .. web.currentID .. "/server/index.lua")
     end
 end
