@@ -30,6 +30,7 @@ function web.getID(siteUrl)
 end
 
 function web.GET(path, ID)
+    local host, path = string.match(path, "([^/]+)/(.*)")
     rednet.send(ID, path, "GET")
     local _, response = rednet.receive("RESPONSE", 5)
     if response == nil then
@@ -41,8 +42,9 @@ function web.GET(path, ID)
     end
 end
 
-function web.POST(path, body, ID)
-    rednet.send(ID, {path = path, body = body}, "POST")
+function web.POST(path, body)
+    local host, path = string.match(path, "([^/]+)/(.*)")
+    rednet.send(host, {path = path, body = body}, "POST")
     local _, response = rednet.receive("RESPONSE", 0.1)
     if response == nil then
         return nil
@@ -98,8 +100,7 @@ function web.getPage(path, ID)
     if fs.exists(cacheFile) then
         return true
     end
-    rednet.send(ID, path, "GET")
-    local _, response = rednet.receive("RESPONSE", 5)
+    local response = web.GET(path, ID)
     if response == nil then
         return nil
     elseif response == false then
