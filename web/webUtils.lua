@@ -69,11 +69,16 @@ function web.getRequests()
     local ID, message, request = rednet.receive()
     if request == "PING" then
         rednet.send(ID, "PONG", "PING")
+        return "PING"
     elseif request == "GET" then
         local file = fs.open(message, "r")
         if file == nil then
             rednet.send(ID, false, "RESPONSE")
-            return
+            return {
+                ID = ID,
+                path = message,
+                success = true
+            }
         end
         local content = file.readAll()
         rednet.send(ID, content, "RESPONSE")
@@ -82,11 +87,20 @@ function web.getRequests()
         local file = fs.open(message.path, "w")
         if file == nil then
             rednet.send(ID, false, "RESPONSE")
-            return
+            return {
+                ID = ID,
+                success = false
+            }
         else
             file.write(message.body)
             rednet.send(ID, true, "RESPONSE")
             file.close()
+            return {
+                ID = ID,
+                path = message.path,
+                body = message.body,
+                success = true
+            }
         end
     end
 end
