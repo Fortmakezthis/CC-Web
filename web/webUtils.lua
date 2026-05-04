@@ -86,6 +86,9 @@ function web.writeFile(path, content)
 end
 
 function web.getPage(path, ID)
+    local cacheFile = "/web/webCache/" .. ID .. "/" .. path
+    if fs.exists(cacheFile) then
+        return true
     rednet.send(ID, path, "GET")
     local _, response = rednet.receive("RESPONSE", 5)
     if response == nil then
@@ -94,6 +97,7 @@ function web.getPage(path, ID)
         return false
     else
         web.writeFile("/web/webCache/" .. ID .. "/" .. path, response)
+        return true
     end
 end
 return web
