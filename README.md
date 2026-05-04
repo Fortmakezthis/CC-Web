@@ -8,7 +8,7 @@ The second is running
 wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/wubDater.lua
 ```
 
-# How to use
+# How to use webUtils.lua
 At the top of every script, write:
 ```lua
 local web = require("/web/webUtils") -- MAKE SURE TO NOT FORGET THE / AT THE BEGINNING, VERY IMPORTANT.
@@ -21,3 +21,5 @@ local web = require("/web/webUtils")
 web.getPage("/server/index.lua", web.getID("obama.tz"))
 shell.run("/web/webCache/4/server/index.lua") -- 4 Being the ID of obama.tz
 ```
+
+# web.GET(path, ID)
