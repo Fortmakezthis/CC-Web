@@ -19,7 +19,7 @@ else
     print("No modem found!")
 end
 
-shell.run("wubDate.lua")
+shell.run("/wubDater.lua")
 local web = require("/web/webUtils")
 
 print("Only authorized servers will be listed, if you want to add a server, contact Tozik LLC. to add it to the list!")
