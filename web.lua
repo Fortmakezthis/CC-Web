@@ -19,7 +19,7 @@ else
     print("No modem found!")
 end
 
-local web = require("/webUtils")
+local web = require("/web/webUtils")
 
 print("Only authorized servers will be listed, if you want to add a server, contact Tozik LLC. to add it to the list!")
 print("Site list:")
@@ -40,14 +40,14 @@ while true do
         print("Not a valid server!")
     else
         print("Requesting index...")
-        local index = web.GET("/index.lua", web.currentId)
+        local index = web.GET("/server/index.lua", web.currentId)
         if index == nil then
             print("Server timed out!")
         elseif index == false then
             print("File not found on server!")
         else
             print("Loading...")
-            indexFile = fs.open("web/index.lua", "w")
+            indexFile = fs.open("/web/webCache/index.lua", "w")
             indexFile.write(index)
             indexFile.close()
             term.clear()
