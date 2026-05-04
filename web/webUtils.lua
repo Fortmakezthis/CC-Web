@@ -12,7 +12,13 @@ else
     web.sites = sites
 end
 
-function web.splitUrl(url) return string.match(url, "([^/]+)/(.*)")
+function web.splitUrl(url)
+    local domain, path = string.match(url, "([^/]+)/(.*)")
+    return {
+        domain = domain,
+        path = path
+    }
+end
 
 function web.getID(siteUrl)
     for i, site in ipairs(web.sites) do
