@@ -1,4 +1,4 @@
-local webUtilsNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/webUtils.lua").readAll()
+local webUtilsNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/web/webUtils.lua").readAll()
 local webNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/web.lua").readAll()
 local webUtils = fs.open("/web/webUtils.lua", "r")
 local web = fs.open("/web.lua", "r")
