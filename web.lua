@@ -35,7 +35,7 @@ end
 while true do
     print("Enter server url (Domain).(TLD) example: obama.tz")
     web.currentUrl = read():lower()
-    web.currentId = web.getId(web.currentUrl)
+    web.currentId = web.getID(web.currentUrl)
     if web.currentId == nil then
         print("Not a valid server!")
     else
