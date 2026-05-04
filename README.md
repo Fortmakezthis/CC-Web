@@ -1,3 +1,6 @@
+# WARNING
+ACTUALLY DO NOT USE THIS RIGHT NOW IT'S SUPER BROKEN BECAUSE I'M WORKING ON IT.
+
 # CC-Web
 This is a repository to store files for my Web project for CC: Tweaked, a programmable computer Minecraft mod.
 
