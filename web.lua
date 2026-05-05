@@ -21,6 +21,7 @@ end
 
 shell.run("/wubDater.lua")
 local web = require("/web/webUtils")
+local fe = require("/web/pageUtils")
 
 print("Only authorized servers will be listed, if you want to add a server, contact Tozik LLC. to add it to the list!")
 print("Site list:")
@@ -35,9 +36,9 @@ end
 
 while true do
     print("Enter server url (Domain).(TLD) example: obama.tz")
-    web.currentUrl = read():lower()
-    if web.splitUrl(web.currentUrl).path == nil then
-        web.currentUrl = web.currentUrl .. "/" .. "server/index.lua"
+    desiredUrl = read():lower()
+    if web.splitUrl(desiredUrl).path == nil then
+        web.currentUrl = desiredUrl .. "/" .. "server/index.mite"
     end
     web.currentDomain = web.splitUrl(web.currentUrl).domain
     web.currentID = web.getID(web.currentDomain)
@@ -45,7 +46,12 @@ while true do
         print("Not a valid server!")
     else
         print("Requesting index...")
-        web.getPage(web.currentUrl)
-        shell.run("/web/webCache/" .. web.currentID .. "/server/index.lua")
+        local iReq = web.GET(web.currentURL)
+        if iReq == false then
+            web.currentURL = desiredUrl .. "/server/index.lua"
+            fe.pageRedirect(web.currentURL, false, false)
+        elseif iReq ~= nil then
+            fe.pageRedirect(web.currentURL, false, true)
+        end
     end
 end
