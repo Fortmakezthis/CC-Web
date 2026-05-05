@@ -23,7 +23,7 @@ function web.splitUrl(url)
 end
 
 function web.getID(siteUrl)
-    siteUrl = web.splitUrl(siteUrl)
+    siteUrl = web.splitUrl(siteUrl).domain
     for i, site in ipairs(web.sites) do
         if site["url"] == siteUrl then
             return site["id"]
