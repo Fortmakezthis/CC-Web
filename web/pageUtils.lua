@@ -53,7 +53,7 @@ function fe.pageRedirect(url, localFile, mite)
             end
         else
             if mite == true then
-                shell.run("/web/mite.lua " .. web.GET(url) .. " path")
+                shell.run("/web/mite.lua " .. web.GET(url))
                 return true
             else
                 web.getPage(url)
