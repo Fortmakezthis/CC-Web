@@ -26,7 +26,7 @@ function parse(code)
         elseif line:sub(1, 9) == "rediText(" then
             local text, x, y, url, mite = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%s*,%s*(%a+)%s*%)')
             if text and x and y and url and mite then
-                mite = mite == "true"
+                mite = mite ==
                 fe.cText(text, tonumber(x), tonumber(y), colors.blue)
                 table.insert(buttons, {x = tonumber(x), y = tonumber(y), w = #text, h = 1, type = "url", url = url, mite = mite})
             end
@@ -45,7 +45,7 @@ function getButtons()
                 for i, button in ipairs(buttons) do
                     if x >= button.x and x <= button.x + button.w and y >= button.y and y <= button.y + button.h - 1 then
                         if button.type == "url" then
-                            fe.pageRedirect(button.url, false, button.mite)
+                            fe.pageRedirect(button.url, true, button.mite)
                             break
                         end
                     end
@@ -57,14 +57,14 @@ function getButtons()
 end
 
 if #args > 0 then
-    if #args > 1 then
-        if args[2]:lower() == "path" then
-            local file = fs.open(args[1], "r")
+    if args[1]:lower() == "path" then
+        if #args > 1 then
+            local file = fs.open(args[2], "r")
             local code = file.readAll()
             file.close()
             parallel.waitForAll(getButtons, parse(code))
         else
-            print("Invalid argument: " .. args[2])
+            print("Invalid argument: " .. args[1])
             return
         end
     else
