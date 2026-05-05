@@ -4,8 +4,8 @@ local pageUtilsNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/C
 local miteNEW = http.get("https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/web/mite.lua").readAll()
 local webUtils = fs.open("/web/webUtils.lua", "r")
 local web = fs.open("/web.lua", "r")
-local pageUtils = fs.open("/web/pageUtils.lua")
-local mite = fs.open("/web/mite.lua")
+local pageUtils = fs.open("/web/pageUtils.lua", "r")
+local mite = fs.open("/web/mite.lua", "r")
 local webUtilsContent, webContent, pageUtilsContent, miteContent
 if webUtils then
     webUtilsContent = webUtils.readAll()
