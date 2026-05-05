@@ -113,7 +113,7 @@ function web.writeFile(path, content)
 end
 
 function web.getPage(url)
-    local host, filePath = web.splitUrl(url)
+    local host, path = (function() local u = web.splitUrl(url); return u.domain, u.path end)()
     local ID = web.getID(host)
     if ID == nil then
         return nil
