@@ -46,10 +46,10 @@ while true do
         print("Not a valid server!")
     else
         print("Requesting index...")
-        local iReq = web.GET(web.currentURL)
+        local iReq = web.GET(web.currentUrl)
         if iReq == false then
             web.currentURL = desiredUrl .. "/server/index.lua"
-            fe.pageRedirect(web.currentURL, false, false)
+            fe.pageRedirect(web.currentUrl, false, false)
         elseif iReq ~= nil then
             fe.pageRedirect(web.currentURL, false, true)
         end
