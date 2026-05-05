@@ -6,7 +6,7 @@ local buttons = {}
 function parse(code)
     for line in string.gmatch(code, "([^\n]+)") do
         if line:sub(1, 5) == "text(" then
-            local text, x, y, color = line:match('text%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,?%s*c?o?l?o?r?s?%.?(%w*)%)')
+            local text, x, y, color = line:match('text%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,?%s*colors%.(%w+)%)')
             if text and x and y then
                 if color ~= "" then
                     fe.cText(text, tonumber(x), tonumber(y), colors[color])
@@ -26,7 +26,7 @@ function parse(code)
         elseif line:sub(1, 9) == "rediText(" then
             local text, x, y, url, mite = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%s*,%s*(%a+)%s*%)')
             if text and x and y and url and mite then
-                mite = mite ==
+                mite = mite == "true"
                 fe.cText(text, tonumber(x), tonumber(y), colors.blue)
                 table.insert(buttons, {x = tonumber(x), y = tonumber(y), w = #text, h = 1, type = "url", url = url, mite = mite})
             end
@@ -62,13 +62,13 @@ if #args > 0 then
             local file = fs.open(args[2], "r")
             local code = file.readAll()
             file.close()
-            parallel.waitForAll(getButtons, parse(code))
+            parallel.waitForAll(getButtons, function() parse(code) end)
         else
             print("Invalid argument: " .. args[1])
             return
         end
     else
-        local code = args[1]
-        parallel.waitForAll(getButtons, parse(code))
+        local code = table.concat(args, " ")
+        parallel.waitForAll(getButtons, function() parse(code) end)
     end
 end
