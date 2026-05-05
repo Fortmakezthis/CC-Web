@@ -38,7 +38,7 @@ while true do
     print("Enter server url (Domain).(TLD) example: obama.tz")
     local desiredUrl = read():lower()
     if web.splitUrl(desiredUrl).path == nil then
-        web.currentUrl = desiredUrl .. "/" .. "server/index.mite"
+        web.currentUrl = desiredUrl .. "/server/index.mite"
     end
     web.currentDomain = web.splitUrl(web.currentUrl).domain
     web.currentID = web.getID(web.currentDomain)
