@@ -24,10 +24,11 @@ function parse(code)
                 end
             end
         elseif line:sub(1, 9) == "rediText(" then
-            local text, x, y, url = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%)')
-            if text and x and y and url then
+            local text, x, y, url, mite = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%s*,%s*(%a+)%s*%)')
+            if text and x and y and url and mite then
+                mite = mite == "true"
                 fe.cText(text, tonumber(x), tonumber(y), colors.blue)
-                table.insert(buttons, {x = tonumber(x), y = tonumber(y), w = #text, h = 1, type = "url", url = url})
+                table.insert(buttons, {x = tonumber(x), y = tonumber(y), w = #text, h = 1, type = "url", url = url, mite = mite})
             end
         end
     end
@@ -44,7 +45,7 @@ function getButtons()
                 for i, button in ipairs(buttons) do
                     if x >= button.x and x <= button.x + button.w and y >= button.y and y <= button.y + button.h - 1 then
                         if button.type == "url" then
-                            fe.pageRedirect(button.url, true, true)
+                            fe.pageRedirect(button.url, true, button.mite)
                             break
                         end
                     end
