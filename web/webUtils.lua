@@ -6,7 +6,7 @@ web.dnsId = 26
 web.sites = {}
 
 rednet.send(web.dnsId, "siteList")
-local _, sites = rednet.receive(nil, 5)
+local _, sites = rednet.receive(nil, 0.1)
 if sites == nil then
     print("DNS SERVER TIMED OUT! OH MY GOD! WHO THE HELL TOUCHED THE DNS SERVER?!?!?\nOh yeah, make sure dnsId is a valid DNS... and make sure the DNS server is approved by Tozik LLC.")
 else
