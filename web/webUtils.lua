@@ -2,7 +2,7 @@ local web = {}
 web.currentUrl = nil
 web.currentDomain = nil
 web.currentID = nil
-web.dnsId = 26
+web.dnsId = 2
 web.sites = {}
 
 rednet.send(web.dnsId, "siteList")

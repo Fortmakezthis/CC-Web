@@ -6,7 +6,7 @@ local buttons = {}
 function parse(code)
     for line in string.gmatch(code, "([^\n]+)") do
         if line:sub(1, 5) == "text(" then
-            local text, x, y, color = line:match('text%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,?%s*colors%.(%w+)%)')
+            local text, x, y, color = line:match('text%s*%(%s*["\']([^"\']+)["\']%s*,%s*(%d+)%s*,%s*(%d+)%s*,?%s*colors%.(%w+)%)')
             if text and x and y then
                 if color ~= "" then
                     fe.cText(text, tonumber(x), tonumber(y), colors[color])
@@ -24,7 +24,7 @@ function parse(code)
                 end
             end
         elseif line:sub(1, 9) == "rediText(" then
-            local text, x, y, url, mite = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%s*,%s*(%a+)%s*%)')
+            local text, x, y, url, mite = line:match('rediText%s*%(%s*["\']([^"\']+)["\']%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*["\']([^"\']+)["\']%s*,%s*(%a+)%s*%)')
             if text and x and y and url and mite then
                 mite = mite == "true"
                 fe.cText(text, tonumber(x), tonumber(y), colors.blue)
@@ -68,7 +68,7 @@ if #args > 0 then
             return
         end
     else
-        local code = table.concat(args, " ")
+        local code = table.concat(args, " ") .. "\n"
         parallel.waitForAll(getButtons, function() parse(code) end)
     end
 end
