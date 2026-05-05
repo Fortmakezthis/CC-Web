@@ -51,7 +51,7 @@ while true do
             web.currentUrl = desiredUrl .. "/server/index.lua"
             fe.pageRedirect(web.currentUrl, false, false)
         elseif iReq ~= nil then
-            fe.pageRedirect(web.currentURL, false, true)
+            fe.pageRedirect(web.currentUrl, false, true)
         end
     end
 end
