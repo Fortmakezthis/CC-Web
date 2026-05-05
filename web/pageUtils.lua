@@ -42,6 +42,7 @@ local web = require("/web/webUtils")
 
 function fe.pageRedirect(url, localFile, mite)
     if url then
+        fe.display.clear()
         if localFile == true then
             if mite == true then
                 shell.run("/web/mite.lua " .. url .. " path")
