@@ -4,7 +4,7 @@ local fe = require("/web/pageUtils")
 function parse(code)
     for line in string.gmatch(code, "([^\n]+)") do
         if line:sub(1, 5) == "text(" then
-            local text, x, y, color = line:match('text%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,?%s*c?o?l?o?r?s?%.?(%w*)%)')
+            local text, x, y, color = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,?%s*c?o?l?o?r?s?%.?(%w*)%)')
             if text and x and y then
                 if color ~= "" then
                     fe.cText(text, tonumber(x), tonumber(y), colors[color])
