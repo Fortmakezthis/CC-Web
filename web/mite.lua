@@ -1,6 +1,8 @@
 local args = {...}
 local fe = require("/web/pageUtils")
 
+local buttons = {}
+
 function parse(code)
     for line in string.gmatch(code, "([^\n]+)") do
         if line:sub(1, 5) == "text(" then
@@ -25,8 +27,31 @@ function parse(code)
             local text, x, y, url = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%)')
             if text and x and y and url then
                 fe.cText(text, tonumber(x), tonumber(y), colors.blue)
+                table.insert(buttons, {x = tonumber(x), y = tonumber(y), w = #text, h = 1, type = "url", url = url})
             end
         end
+    end
+end
+
+function getButtons()
+    while true do
+        local event, mb, x, y = os.pullEventRaw()
+        if event == "terminate" then
+            fe.display.clear()
+            return
+        elseif event == "mouse_click" then
+            if mb == 1 then
+                for i, button in ipairs(buttons) do
+                    if x >= button.x and x <= button.x + button.w and y >= button.y and y <= button.y + button.h - 1 then
+                        if button.type == "url" then
+                            fe.pageRedirect(button.url, true, true)
+                            break
+                        end
+                    end
+                end
+            end
+        end
+        sleep(0)
     end
 end
 
@@ -36,25 +61,13 @@ if #args > 0 then
             local file = fs.open(args[1], "r")
             local code = file.readAll()
             file.close()
-            parse(code)
-            while true do
-                local event, param1, param2, param3 = os.pullEvent()
-                if event == "terminate" then
-                    break
-                end
-            end
+            parallel.waitForAll(getButtons, parse(code))
         else
             print("Invalid argument: " .. args[2])
             return
         end
     else
         local code = args[1]
-        parse(code)
-        while true do
-            local event, param1, param2, param3 = os.pullEvent()
-            if event == "terminate" then
-                break
-            end
-        end
+        parallel.waitForAll(getButtons, parse(code))
     end
 end
