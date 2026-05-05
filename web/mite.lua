@@ -21,7 +21,7 @@ function parse(code)
                     fe.drawBox(tonumber(x), tonumber(y), tonumber(w), tonumber(h), colors.white)
                 end
             end
-        elseif line:sub(1, 8) == "rediText(" then
+        elseif line:sub(1, 9) == "rediText(" then
             local text, x, y, url = line:match('rediText%("([^"]+)"%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*"([^"]+)"%)')
             if text and x and y and url then
                 fe.cText(text, tonumber(x), tonumber(y), colors.blue)
