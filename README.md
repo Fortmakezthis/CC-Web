@@ -2,7 +2,7 @@
 This is a repository to store files for my Web project for CC: Tweaked, a programmable computer Minecraft mod.
 
 # How to install web
-There are two ways to install web and webUtils. The first is downloading wubDater.lua from here, dragging it onto a computer in Minecraft, and running it.
+There are two ways to install web and dependencies. The first is downloading wubDater.lua from here, dragging it onto a computer in Minecraft, and running it.
 The second is running:
 ```lua
 wget https://raw.githubusercontent.com/Fortmakezthis/CC-Web/refs/heads/main/wubDater.lua /wubDater.lua
