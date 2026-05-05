@@ -57,7 +57,7 @@ function fe.pageRedirect(url, localFile, mite)
                 return true
             else
                 web.getPage(url)
-                shell.run("/web/webCache/" .. web.getID(url) .. web.splitUrl(url).path)
+                shell.run("/web/webCache/" .. web.getID(url) .. "/" .. web.splitUrl(url).path)
                 return true
             end
         end
