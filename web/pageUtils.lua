@@ -45,18 +45,22 @@ function fe.pageRedirect(url, localFile, mite)
         fe.display.clear()
         if localFile == true then
             if mite == true then
+                fe.display.clear()
                 shell.run("/web/mite.lua path" .. url)
                 return true
             else
+                fe.display.clear()
                 shell.run(url)
                 return true
             end
         else
             if mite == true then
+                fe.display.clear()
                 shell.run("/web/mite.lua " .. web.GET(url):gsub('"', "'"))
                 return true
             else
                 web.getPage(url)
+                fe.display.clear()
                 shell.run("/web/webCache/" .. web.getID(url) .. "/" .. web.splitUrl(url).path)
                 return true
             end
