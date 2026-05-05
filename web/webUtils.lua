@@ -124,7 +124,7 @@ function web.getPage(url)
     elseif response == false then
         return false
     else
-        web.writeFile("/web/webCache/" .. ID .. "/" .. filePath, response)
+        web.writeFile("/web/webCache/" .. ID .. "/" .. path, response)
         return true
     end
 end
