@@ -2,7 +2,7 @@ local web = {}
 web.currentUrl = nil
 web.currentDomain = nil
 web.currentID = nil
-web.dnsId = 26
+web.dnsId = 2
 web.sites = {}
 
 rednet.send(web.dnsId, "siteList")
@@ -45,8 +45,8 @@ function web.GET(url)
     end
 end
 
-function web.POST(path, body)
-    local host, path = string.match(path, "([^/]+)/(.*)")
+function web.POST(url, body)
+    local host, path = web.splitUrl(url)
     rednet.send(web.getID(host), {path = path, body = body}, "POST")
     local _, response = rednet.receive("RESPONSE", 0.1)
     if response == nil then
