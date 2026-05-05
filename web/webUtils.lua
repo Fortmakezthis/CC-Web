@@ -23,7 +23,7 @@ function web.splitUrl(url)
 end
 
 function web.getID(siteUrl)
-    siteUrl = web.splitUrl(siteUrl).domain
+    local siteUrl = web.splitUrl(siteUrl).domain
     for i, site in ipairs(web.sites) do
         if site["url"] == siteUrl then
             return site["id"]
@@ -33,7 +33,7 @@ function web.getID(siteUrl)
 end
 
 function web.GET(url)
-    local host, path = web.splitUrl(url)
+    local host, path = (function() local u = web.splitUrl(url); return u.domain, u.path end)()
     rednet.send(web.getID(host), path, "GET")
     local _, response = rednet.receive("RESPONSE", 5)
     if response == nil then
@@ -46,7 +46,7 @@ function web.GET(url)
 end
 
 function web.POST(url, body)
-    local host, path = web.splitUrl(url)
+    local host, path = (function() local u = web.splitUrl(url); return u.domain, u.path end)()
     rednet.send(web.getID(host), {path = path, body = body}, "POST")
     local _, response = rednet.receive("RESPONSE", 0.1)
     if response == nil then
@@ -112,13 +112,13 @@ function web.writeFile(path, content)
     file.close()
 end
 
-function web.getPage(path)
-    local host, filePath = string.match(path, "([^/]+)/(.*)")
+function web.getPage(url)
+    local host, filePath = web.splitUrl(url)
     local ID = web.getID(host)
     if ID == nil then
         return nil
     end
-    local response = web.GET(path)
+    local response = web.GET(url)
     if response == nil then
         return nil
     elseif response == false then
