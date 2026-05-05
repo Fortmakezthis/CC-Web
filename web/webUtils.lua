@@ -32,8 +32,8 @@ function web.getID(siteUrl)
     return nil
 end
 
-function web.GET(path)
-    local host, path = string.match(path, "([^/]+)/(.*)")
+function web.GET(url)
+    local host, path = web.splitUrl(url)
     rednet.send(web.getID(host), path, "GET")
     local _, response = rednet.receive("RESPONSE", 5)
     if response == nil then
