@@ -45,7 +45,7 @@ function getButtons()
                 for i, button in ipairs(buttons) do
                     if x >= button.x and x <= button.x + button.w and y >= button.y and y <= button.y + button.h - 1 then
                         if button.type == "url" then
-                            fe.pageRedirect(button.url, true, button.mite)
+                            fe.pageRedirect(button.url, false, button.mite)
                             break
                         end
                     end
