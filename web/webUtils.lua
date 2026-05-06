@@ -73,17 +73,22 @@ function web.getRequests()
         return "PING"
     elseif request == "GET" then
         local file = fs.open(message, "r")
-        if file == nil or not fs.exists(file) then
+        if file == nil or not fs.exists(message) then
             rednet.send(ID, false, "RESPONSE")
             return {
                 ID = ID,
                 path = message,
-                success = true
+                success = false
             }
         end
         local content = file.readAll()
         rednet.send(ID, content, "RESPONSE")
         file.close()
+        return {
+            ID = ID,
+            path = message,
+            success = true
+        }
     elseif request == "POST" then
         local file = fs.open(message.path, "w")
         if file == nil then
