@@ -37,4 +37,5 @@ web.getPage("/server/index.lua", web.getID("obama.tz"))
 shell.run("/web/webCache/4/server/index.lua") -- 4 Being the ID of obama.tz
 ```
 
-# web.GET(path, ID)
+# Warnings
+Currently, in mite, you NEED to provide a color for text(), box(), and exText(), or else it will error out. I'm too tired to fix this rn, I just got braces and my teeth hurt
