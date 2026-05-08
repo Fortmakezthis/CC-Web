@@ -32,10 +32,12 @@ function web.getID(siteUrl)
     return nil
 end
 
-function web.GET(url)
+function web.GET(url, timeout)
     local host, path = (function() local u = web.splitUrl(url); return u.domain, u.path end)()
-    rednet.send(web.getID(host), path, "GET")
-    local _, response = rednet.receive("RESPONSE", 5)
+    local id = web.getID(host)
+    if not id then return nil end
+    rednet.send(id, path, "GET")
+    local _, response = rednet.receive("RESPONSE", timeout or 5)
     if response == nil then
         return nil
     elseif response == false then
@@ -78,17 +80,12 @@ function web.getRequests()
             return {
                 ID = ID,
                 path = message,
-                success = false
+                success = true
             }
         end
         local content = file.readAll()
         rednet.send(ID, content, "RESPONSE")
         file.close()
-        return {
-            ID = ID,
-            path = message,
-            success = true
-        }
     elseif request == "POST" then
         local file = fs.open(message.path, "w")
         if file == nil then
