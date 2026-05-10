@@ -1,6 +1,5 @@
 local args = {...}
 local fe = require("/web/pageUtils")
-local web = require("/web/webUtils")
 
 local buttons = {}
 local gets = {}
@@ -72,6 +71,7 @@ function getButtons()
 end
 
 function getGets()
+    local web = require("/web/webUtils")
     while true do
         local event = os.pullEventRaw()
         if event == "terminate" then
